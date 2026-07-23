@@ -13,75 +13,8 @@
     enable = true;
     enable32Bit = true;
   };
-  # hardware.opengl has beed changed to hardware.graphics
 
-  services.xserver.videoDrivers = ["nvidia"];
-  # services.xserver.videoDrivers = ["amdgpu"];
-
-  hardware.nvidia.modesetting.enable = true;
-
-}
-```
-
-## sync
-
-```nix
-# configuration.nix
-
-{ pkgs, ... }:
-
-{
-
-  hardware.nvidia.prime = {
-    sync.enable = true;
-
-    # integrated
-    amdgpuBusId = "PCI:6:0:0"
-    # intelBusId = "PCI:0:0:0";
-
-    # dedicated
-    nvidiaBusId = "PCI:1:0:0";
-  };
-
-}
-```
-
-## offload + sync specialization
-
-```nix
-# configuration.nix
-
-{ pkgs, ... }:
-
-{
-
-  hardware.nvidia.prime = {
-    offload = {
-      enable = true;
-      enableOffloadCmd = true;
-    };
-
-    # integrated
-    # intelBusId = "PCI:0:0:0";
-    amdgpuBusId = "PCI:6:0:0"
-    
-    # dedicated
-    nvidiaBusId = "PCI:1:0:0";
-  };
-
-  specialisation = {
-    gaming-time.configuration = {
-
-      hardware.nvidia = {
-        prime.sync.enable = lib.mkForce true;
-        prime.offload = {
-          enable = lib.mkForce false;
-          enableOffloadCmd = lib.mkForce false;
-        };
-      };
-
-    };
-  };
+  services.xserver.videoDrivers = ["amdgpu"];
 
 }
 ```
