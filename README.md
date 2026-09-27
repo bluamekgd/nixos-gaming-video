@@ -14,6 +14,7 @@
     enable32Bit = true;
   };
 
+  #         \/\/\/ this DOES also do wayland
   services.xserver.videoDrivers = ["amdgpu"];
 
 }
